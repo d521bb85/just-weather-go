@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	config.MustInit()
-	httpserver.MustInit()
+	cfg := config.MustInit()
+	httpserver.MustStart(cfg)
 }

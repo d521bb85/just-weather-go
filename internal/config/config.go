@@ -1,7 +1,7 @@
 package config
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"sync"
 
@@ -18,22 +18,23 @@ var (
 	config *Config
 )
 
-func MustInit() {
+func MustInit() *Config {
 	once.Do(func() {
 		if err := godotenv.Load(); err != nil && !os.IsNotExist(err) {
-			panic(fmt.Sprintf("failed to read .env file: %v", err))
+			log.Fatalf("failed to read .env file: %v", err)
 		}
 
 		config = &Config{}
 		if err := env.Parse(config); err != nil {
-			panic(fmt.Sprintf("failed to parse environment variables: %v", err))
+			log.Fatalf("failed to parse environment variables: %v", err)
 		}
 	})
+	return config
 }
 
 func MustGet() *Config {
 	if config == nil {
-		panic("config is not initialized, call Init() first")
+		log.Fatal("config is not initialized, call Init() first")
 	}
 	return config
 }
