@@ -2,10 +2,11 @@ package main
 
 import (
 	"just-weather-go/internal/config"
-	"just-weather-go/internal/httpserver"
+	"just-weather-go/internal/webserver"
 )
 
 func main() {
 	cfg := config.MustInit()
-	httpserver.MustStart(cfg)
+
+	webserver.MustStart(cfg)
 }

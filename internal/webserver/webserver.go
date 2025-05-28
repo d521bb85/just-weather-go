@@ -1,9 +1,9 @@
-package httpserver
+package webserver
 
 import (
 	"fmt"
+	"just-weather-go/internal/app/web"
 	"just-weather-go/internal/config"
-	userRoutes "just-weather-go/internal/user/routes"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/helmet"
@@ -14,7 +14,7 @@ func MustStart(cfg *config.Config) {
 	server.Use(helmet.New())
 
 	v1 := server.Group("/api/v1")
-	userRoutes.Register(v1.Group("/users"))
+	web.RegisterRoutes(v1)
 
 	addr := fmt.Sprintf(":%s", cfg.HTTPPort)
 	if err := server.Listen(addr); err != nil {
